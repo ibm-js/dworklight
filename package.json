@@ -1,0 +1,23 @@
+{
+  "name"          : "dwl",
+  "version"       : "1.9",
+  "author"        : "Karl Bishop, and others",
+  "main"          : "./main",
+  "description"   : "Dojo-Worklight integration modules",
+	"licenses": [
+    	{
+        	"type": "AFLv2.1",
+        	"url": "http://trac.dojotoolkit.org/browser/dojo/trunk/LICENSE#L43"
+     	}
+	],
+	"repository": {
+    	"type" : "git",
+    	"url"  : "https://csnext.ibm.com/projects/isswweb/"
+  	},
+    "dependencies": {
+	    "dojo"  : ["1.9"],
+	    "dijit" : ["1.9"],
+	    "dojox" : ["1.9"]
+    },
+    "dojoBuild"     : "dwl.profile.js"
+}
