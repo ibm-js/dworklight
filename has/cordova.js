@@ -1,7 +1,4 @@
-//-------------------------------------------------------------------------
-// Module: dwl/has/cordova
-//-------------------------------------------------------------------------
-//	Has rules defined by this class.
+//	Has.js feature test rules defined for Cordova API's
 //--------------------------------------------------------------------
 //	"cordova"					Returns true if running under Cordova, else false
 //  "cordova-accelerometer"		Returns true if has accelerometer access, else false
@@ -69,48 +66,39 @@ define([
 		"cordova-windows"
     ],
 
-    //--------------------------------------------------------------------
 	has.add("cordova", function() {
 		var v = lang.getObject("device.cordova");
 		return v ? v : false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-accelerometer", function() {
 		return !!( has("cordova") && navigator.accelerometer);
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-camera", function() {
 		return !!( has("cordova") && navigator.camera);
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-audio", function() {
 		return !!( has("cordova") && lang.getObject("navigator.device.capture.captureAudio") );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-capture-audio", function() {
 		return !!( has("cordova") && lang.getObject("navigator.device.capture.captureAudio") );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-capture-image", function() {
 		return !!( has("cordova") && lang.getObject("navigator.device.capture.captureImage") );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-capture-video", function() {
 		return !!( has("cordova") && lang.getObject("navigator.device.capture.captureVideo") );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-compass", function() {
 		return !!( has("cordova") && navigator.compass);
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-connection", function() {
 		var type = lang.getObject("navigator.connection.type");
 		if ( has("cordova") && type ) {
@@ -129,18 +117,15 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-contacts", function() {
 		return !!( has("cordova") && lang.getObject("navigator.contacts") );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-device", function() {
 		var dev = window.device;
 		return ( has("cordova") && dev ) ? dev : false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-platform", function() {
 		var dev = has("cordova-device");
 		if ( dev ) {
@@ -150,90 +135,74 @@ define([
 		return null;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-android", function() {
 		var dev = has("cordova-device");
 		var platform = has("cordova-platform");
 		return (platform && platform.match(/android/i) )  ? dev.version : false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-iphone", function() {
 		var dev = has("cordova-device");
 		var platform = has("cordova-platform");
 		return (platform && platform.match(/iphone/i) )  ? dev.version : false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-ipad", function() {
 		var dev = has("cordova-device");
 		var platform = has("cordova-platform");
 		return(platform && platform.match(/ipad/i) )  ? dev.version : false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-ios", function() {
 		return has("cordova-iphone") || has("cordova-ipad");
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-blackberry", function() {
 		var dev = has("cordova-device");
 		var platform = has("cordova-platform");
 		return (platform && platform.match(/blackberry/i) ) ? dev.version : false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-windows", function() {
 		var dev = has("cordova-device");
 		var platform = has("cordova-platform");
 		return (platform && platform.match(/win/i) )  ? dev.version : false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-webos", function() {
 		var dev = has("cordova-device");
 		var platform = has("cordova-platform");
 		return (platform && platform.match(/webos/i) )  ? dev.version : false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-file", function() {
 		return !!( has("cordova") && window.requestFileSystem );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-geolocation", function() {
-//		return !!( has("cordova") && lang.getObject("navigator.geolocation.getCurrentPosition") );
 		return !!lang.getObject("navigator.geolocation.getCurrentPosition");
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-media", function() {
 		return !!( has("cordova") && window.Media );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-alert", function() {
 		return !!( has("cordova") && lang.getObject("navigator.notification.alert") );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-confirm", function() {
 		return !!( has("cordova") && lang.getObject("navigator.notification.confirm") );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-beep", function() {
 		return !!( has("cordova") && lang.getObject("navigator.notification.beep") );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("cordova-storage", function() {
 		return !!( has("cordova") && window.openDatabase);
 	});
 
-	//--------------------------------------------------------------------
 	c.dumpHasTests = function() {
 		var F = MODULE+".dumpHasTests(): ";
 		var tests = {};
