@@ -1,7 +1,4 @@
-//-------------------------------------------------------------------------
-// Module: dwl/has/worklight
-//-------------------------------------------------------------------------
-//	Has rules defined by this class.
+//	Has.js rules defined by this class for feature detection of Worklight API's
 //--------------------------------------------------------------------
 //	"worklight"						Returns true if running under Worklight, else false
 //	"worklight-device"				Returns device name, else "browser"
@@ -31,17 +28,10 @@ define([
     "dojo/_base/lang",
     "dojo/has"
 ], function(lang, has) {
-
-	//--------------------------------------------------------------------
 	var MODULE = "dwl/has/worklight";
-	//console.log("Worklight - Has setup");
-
 	var wl = {};
-
-
 	wl.tabletSize = 500;
 	wl.desktopSize = 1024;
-
 	wl.hasTests = [
 	    "worklight",
 	    "worklight-device",
@@ -67,12 +57,10 @@ define([
 	    "worklight-jsonstore"
 	];
 
-	//--------------------------------------------------------------------
 	has.add("worklight", function() {
 		return !!(window["WL"] && window["WL"].Client);
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-android", function() {
 		if ( has("worklight") ) {
 			return  (WL.Client.getEnvironment() == WL.Environment.ANDROID );
@@ -80,7 +68,6 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-iphone", function() {
 		if ( has("worklight") ) {
 			return ( WL.Client.getEnvironment() == WL.Environment.IPHONE );
@@ -88,7 +75,6 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-ipad", function() {
 		if ( has("worklight") ) {
 			return ( WL.Client.getEnvironment() == WL.Environment.IPAD );
@@ -96,7 +82,6 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-ios", function() {
 		if ( has("worklight") ) {
 			var dev = has("worklight-hybrid");
@@ -105,7 +90,6 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-webapp", function() {
 		if ( has("worklight") ) {
 			return ( WL.Client.getEnvironment() == WL.Environment.WEB_APP );
@@ -113,7 +97,6 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-tablet", function() {
 		if ( has("worklight") ) {
 			var dev = has("worklight-hybrid");
@@ -122,7 +105,6 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-hybrid", function() {
 		if ( has("worklight") ) {
 			if ( has("worklight-android") ) { return WL.Environment.ANDROID; }
@@ -132,12 +114,10 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-device", function() {
 		return has("worklight-hybrid") || "browser";
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-preview", function() {
 		if ( has("worklight") ) {
 			if ( WL.Environment.PREVIEW === WL.Client.getEnvironment() ) {
@@ -151,7 +131,6 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-preview-android", function() {
 		if ( has("worklight") ) {
 			return ( has("worklight-preview") == WL.Environment.ANDROID );
@@ -159,7 +138,6 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-preview-ipad", function() {
 		if ( has("worklight") ) {
 			return (has("worklight-preview") == WL.Environment.IPAD );
@@ -167,7 +145,6 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-preview-iphone", function() {
 		if ( has("worklight") ) {
 			return ( has("worklight-preview") == WL.Environment.IPHONE );
@@ -175,7 +152,6 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-preview-ios", function() {
 		if ( has("worklight") ) {
 			var pre = has("worklight-preview");
@@ -184,7 +160,6 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-preview-tablet", function() {
 		if ( has("worklight") ) {
 			var pre = has("worklight-preview");
@@ -193,7 +168,6 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-preview-webapp", function() {
 		if ( has("worklight") ) {
 			return ( has("worklight-preview") == WL.Environment.WEB_APP );
@@ -201,41 +175,34 @@ define([
 		return false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-phone-size", function() {
 		var sz = Math.min(window.innerHeight, window.innerWidth);
 		return !!( has("worklight") && sz < wl.tabletSize );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-tablet-size", function() {
 		var sz = Math.min(window.innerHeight, window.innerWidth);
 		return !!( has("worklight") && sz >= wl.tabletSize && sz < 1024 );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-tablet-like", function() {
 		return ( has("worklight-tablet") || has("worklight-preview-tablet") );
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-mobile-browser", function() {
 		var ua = navigator.userAgent.match(/("android"|"blackberry"|"iPad"|"iPhone")/i);
 		return (!has("worklight-hybrid") && ua) ? navigator.userAgent : false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-desktop-browser", function() {
 		var ua = navigator.userAgent.match(/("android"|"blackberry"|"iPad"|"iPhone")/i);
 		return (!has("worklight-hybrid") && !ua) ? navigator.userAgent : false;
 	});
 
-	//--------------------------------------------------------------------
 	has.add("worklight-jsonstore", function() {
 		return (has("worklight-hybrid") && typeof WL.JSONStore !== 'undefined');
 	});
 
-	//--------------------------------------------------------------------
 	wl.dumpHasTests = function() {
 		var F = MODULE+".dumpHasTests(): ";
 		var tests = {};
