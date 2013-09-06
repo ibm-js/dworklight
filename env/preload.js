@@ -1,8 +1,4 @@
-//-----------------------------------------------------------------------------
-// Generic JS file to establish some environment setting BEFORE dojo is loaded
-//-----------------------------------------------------------------------------
-
-//-- Check url parameters
+// Check url parameters
 var issw = {
 	mobile : {
 		device : null,
@@ -27,11 +23,7 @@ var issw = {
 	}
 };
 
-// -----------------------------------------------------------------------------
-// -- Inline code
-// -----------------------------------------------------------------------------
-
-// -- Set up default device settings
+// Set up default device settings
 var ua = navigator.userAgent;
 if (ua.match(/android/i)) {
 	issw.mobile.device = "Android";
@@ -70,9 +62,7 @@ if (deviceParam) {
 }
 console.log("PRELOAD: Device: ", issw.mobile.device);
 
-// ----------------------------------------------------------------------------------
 // Custom worklight block that will allow very simple testing using HTTP server
-// ----------------------------------------------------------------------------------
 if (typeof (WL) == 'undefined' || WL == null) {
 	console.warn("PRELOAD: Worklight: Creating stub WL environment for HTTP only testing");
 	
