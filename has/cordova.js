@@ -31,6 +31,7 @@
 //--------------------------------------------------------------------
 
 define([
+    /* TODO: Remove dependency on dojo/_base/lang (inline the lang.getObject() using private function) */
     "dojo/_base/lang",
     "dojo/has"
 ], function(lang, has) {
