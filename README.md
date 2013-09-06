@@ -1,7 +1,7 @@
 dwl
 ===
 
-Dojo - Worklight Libraries
+Dojo - Worklight Environment
 
 This package contains AMD modules useful for working with IBM Worklight's client environment and Apache Cordova (Phongap).
 
