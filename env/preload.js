@@ -1,39 +1,25 @@
-//---------------------------------------------------------------------------------
-//
-// IBM Software Services for WebSphere (ISSW)
-//
-// Licensed Materials - Property of IBM
-// (C) Copyright IBM Corp. 2012  All Rights Reserved
-// US Government Users Restricted Rights - Use, duplication or
-// disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
-//
 //-----------------------------------------------------------------------------
 // Generic JS file to establish some environment setting BEFORE dojo is loaded
 //-----------------------------------------------------------------------------
+// This preload stub function should not be needed for Worklight 6.5+
+//-----------------------------------------------------------------------------
 
 //-- Check url parameters
-var issw = {
-	mobile : {
-		device : null,
-	
-		getParam : function(name) {
-			// summary:
-			//		Return requested parameter if located.
-			// name: String
-			//		Key of argument to locate
-			// Returns: String
-			//		Matching parameter value
-			// tags:
-			//		public
-			var F = "issw.mobile.getParam: ";
-			name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]"); // JSLint:OK
-			var regexS = "[\\?&]" + name + "=([^&#]*)";
-			var regex = new RegExp(regexS);
-			var results = regex.exec(location.href);
-			results = (results ? results[1] : null);
-			return results;
-		}
-	}
+var getParam = function(name) {
+	// summary:
+	//		Return requested parameter if located.
+	// name: String
+	//		Key of argument to locate
+	// Returns: String
+	//		Matching parameter value
+	// tags:
+	//		public
+	name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]"); // JSLint:OK
+	var regexS = "[\\?&]" + name + "=([^&#]*)";
+	var regex = new RegExp(regexS);
+	var results = regex.exec(location.href);
+	results = (results ? results[1] : null);
+	return results;
 };
 
 // -----------------------------------------------------------------------------
@@ -41,50 +27,51 @@ var issw = {
 // -----------------------------------------------------------------------------
 
 // -- Set up default device settings
+var device = null;
 var ua = navigator.userAgent;
 if (ua.match(/android/i)) {
-	issw.mobile.device = "Android";
+	device = "Android";
 } else if (ua.match(/blackberry/i)) {
-	issw.mobile.device = "BlackBerry";
+	device = "BlackBerry";
 } else if (ua.match(/iPad/i)) {
-	issw.mobile.device = "iPad";
+	device = "iPad";
 } else if (ua.match(/iPhone/i)) {
-	issw.mobile.device = "iphone";
+	device = "iphone";
 } else {
-	issw.mobile.device = "webapp";
+	device = "webapp";
 }
 
-var deviceParam = issw.mobile.getParam("device");
+var deviceParam = getParam("device");
 if (deviceParam) {
 	switch (deviceParam.toLowerCase()) {
 	case "android":
-		issw.mobile.device = "Android";
+		device = "Android";
 		break;
 	case "bb":
-		issw.mobile.device = "BlackBerry";
+		device = "BlackBerry";
 		break;
 	case "blackberry":
-		issw.mobile.device = "BlackBerry";
+		device = "BlackBerry";
 		break;
 	case "custom":
-		issw.mobile.device = "Custom";
+		device = "Custom";
 		break;
 	case "ipad":
-		issw.mobile.device = "iPad";
+		device = "iPad";
 		break;
 	case "iphone":
-		issw.mobile.device = "iphone";
+		device = "iphone";
 		break;
 	}
 }
-console.log("PRELOAD: Device: ", issw.mobile.device);
+console.log("PRELOAD: Device:", device);
 
 // ----------------------------------------------------------------------------------
 // Custom worklight block that will allow very simple testing using HTTP server
 // ----------------------------------------------------------------------------------
 if (typeof (WL) == 'undefined' || WL == null) {
 	console.warn("PRELOAD: Worklight: Creating stub WL environment for HTTP only testing");
-	
+
 	var servicesUrl = location.href.substring(0, location.href.indexOf("/apps/services/")+15 );
 	WL = {
 		mock : 'true',
@@ -149,12 +136,12 @@ if (typeof (WL) == 'undefined' || WL == null) {
 				return "mock data";
 			},
 			login : function(realm) {
-				return	
+				return
 			},
 			logout : function(realm) {
 				console.warn("WL Mock: logout(): Logged out for: ", realm);
 				return {};
-			},	
+			},
 			Push : {
 				subscribe : function() {
 					console.log("WL Mock: Push subscription function done");
@@ -188,7 +175,7 @@ if (typeof (WL) == 'undefined' || WL == null) {
 			}
 		}
 	};
-	if (typeof (Cordova) == 'undefined' || Cordova == null) { 
+	if (typeof (Cordova) == 'undefined' || Cordova == null) {
 		Cordova = {};
 	}
 }

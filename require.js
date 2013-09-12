@@ -1,16 +1,8 @@
 //-------------------------------------------------------------------------
-//
-// IBM Software Services for WebSphere (ISSW)
-//
-// Licensed Materials - Property of IBM
-// (C) Copyright IBM Corp. 2012  All Rights Reserved
-// US Government Users Restricted Rights - Use, duplication or
-// disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
-//
-//-------------------------------------------------------------------------
-// Module: issw/mobile/worklight
+// Module: dworklight/require
 //-------------------------------------------------------------------------
 define([
+	"module",
     "dojo/_base/array",          // arr
     "dojo/_base/lang",
     "dojo/has",
@@ -24,11 +16,11 @@ define([
 ], function(arr, lang, has ) {
 
 	//--------------------------------------------------------------------
-	var MODULE = "issw/mobile/worklight";
+	var MODULE = module.id;
 	//console.log("Worklight - Env setup");
 
 	//--------------------------------------------------------------------
-	var wl = {
+	function require(){
 
 		//--------------------------------------------------------------------
 		getHostUrl: function(/*bool*/ fullWebApp) {
@@ -38,7 +30,7 @@ define([
 			//		Note: The worklight server is not defined until after WL.init() has completed!
 			//	fullWebApp: bool
 			//		Returns the fully qualified mobilewebapp url
-			var F = MODULE+".getHostUrl(): ";
+			var F = MODULE+".getHostUrl:";
 			var host;
 			if ( has("worklight") ) {
 				//-- We need to get the app name based on the api
@@ -57,7 +49,7 @@ define([
 			} else {
 				host = "/";
 			}
-			console.debug(F,"Host:",host);
+			//console.debug(F,"Host:",host);
 			return host;
 		},
 
@@ -83,14 +75,14 @@ define([
 			modules  = lang.isArray(modules)  ? modules  : [modules];
 
 			//-- WL defined by injected scripts at build time.
-			host = wl.getHostUrl(true);
+			host = this.getHostUrl(true);
 
 			//-- build up packages array / map
 			arr.forEach(packages, function(MODULE) {
 				MODULEs.push( {name:MODULE, location:host+MODULE} );
 			});
 
-			console.log(F,"Loading modules from:",MODULEs );
+			//console.log(F,"Loading modules from:",MODULEs );
 
 			require({
 				packages : MODULEs
@@ -98,5 +90,5 @@ define([
 
 		}
 	};
-    return wl;
+    return require;
 });
