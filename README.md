@@ -2,6 +2,10 @@ dworklight : Dojo - Worklight Libraries
 ==========
 This project contains several modules to assist in using Dojo within the IBM Worklight platform.
 
+activity
+--------
+Simple activity control that allows for native or Dojo basic activity indicators.
+
 console
 -------
 WL console logging adapter

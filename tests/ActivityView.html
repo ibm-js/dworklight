@@ -1,0 +1,47 @@
+<div>
+
+	<h1 data-dojo-type="dojox.mobile.Heading">Worklight Dynamic Busy Indicator Tests</h1>
+	
+    <div style="width:80%; margin: 20px auto;">
+        <div data-dojo-attach-point="dapText" 
+             data-dojo-type="dojox.mobile.TextBox"
+             data-dojo-props=""
+             style="width:100%;">
+        </div>
+	    <div data-dojo-attach-point="dapMessageButton" 
+	         data-dojo-type="dojox.mobile.ToolBarButton"
+	         data-dojo-props="label:'Click to start busy indicator'"
+	         style="width:100%;">
+	    </div>
+	    <br/><br/>
+        <div data-dojo-attach-point="dapCountdownButton" 
+             data-dojo-type="dojox.mobile.ToolBarButton"
+             data-dojo-props="label:'Click to start countdown busy indicator'"
+             style="width:100%;">
+        </div>   
+    </div>
+
+    <div data-dojo-type="dojox.mobile.RoundRect" data-dojo-props="">
+        <p>
+            This tests out the dynamic busy indicator.
+        </p>
+        <p>
+            In hybrid applications, the native Worklight busy indicator is used.
+            For browser based applications, the Dojo Mobile busy indicator emulation is used.
+            IOS devices allow for a custom message to be supplied. For all others, the 
+            custom message is ignored.
+            Once started the busy indicator will run for 5 seconds, and then be closed.
+        </p>
+        <p>
+            Syntax:<br/><pre>
+require(["issw/mobile/activity"], function(activity) {
+    activity.start("Optional message");
+    //-- Do something
+    activity.stop();
+})
+            </pre>
+        </p>  
+    </div>   
+
+</div>
+		

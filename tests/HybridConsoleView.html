@@ -1,0 +1,41 @@
+<div>
+
+	<h1 data-dojo-type="dojox.mobile.Heading">Worklight Console Intercept Tests</h1>
+	
+    <div data-dojo-type="dojox.mobile.RoundRect" data-dojo-props="">
+        <p>
+            This tests out the &quot;issw/mobile/worklight/hybrid-console&quot; module's
+            ability to intercept console.xxx() and WL.Logger.xxx() calls.
+        </p>
+        <p>
+            The XCode (IOS) and LogCat (Android) logging environments only support a 
+            single string console logging argument. Passing extra arguments are ignored,
+            and passing in an object produces "null". Not very helpful.
+        </p>
+        <p>
+            In hybrid applications, console interceptors are put in place by the worklight or
+            cordova modules. These will accept all normal console arguments and attempt to
+            merge and format objects as JSON strings. If running under Worklight, the Wl.Logger
+            functions are also intercepted.
+        </p>
+        <p>
+            All output of these tests are shown in the appropriate logging environment. Look for
+            Errors being thrown or any output that does not look proper.
+        </p>
+        <p>
+            The following console commands are run on each view of this test, being called with a;
+            string, integer, boolean, null, object, and various combinations:<br/><pre>
+    console.debug();
+    console.log();
+    console.info();
+    console.warn();
+    console.error();</pre>
+            If a worklight-based hybrid application, these are also tested<br/><pre>
+    WL.Logger.debug();
+    WL.Logger.error();
+            </pre>
+        </p>  
+    </div>   
+
+</div>
+		
