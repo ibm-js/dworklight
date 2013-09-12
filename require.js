@@ -3,17 +3,13 @@
 //-------------------------------------------------------------------------
 define([
 	"module",
-    "dojo/_base/array",          // arr
+    "dojo/_base/array",
     "dojo/_base/lang",
     "dojo/has",
 
-    "./has/cordova",
-    "./has/worklight",
-    "./env/android",
-    "./console",
-    "./request/service"
+    "./sniff",
 
-], function(arr, lang, has ) {
+], function(array, lang, has ) {
 
 	//--------------------------------------------------------------------
 	var MODULE = module.id;
@@ -78,7 +74,7 @@ define([
 			host = this.getHostUrl(true);
 
 			//-- build up packages array / map
-			arr.forEach(packages, function(MODULE) {
+			array.forEach(packages, function(MODULE) {
 				MODULEs.push( {name:MODULE, location:host+MODULE} );
 			});
 
