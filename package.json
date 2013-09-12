@@ -1,7 +1,7 @@
 {
-  "name"          : "dwl",
+  "name"          : "dworklight",
   "version"       : "1.9",
-  "author"        : "Karl Bishop, and others",
+  "author"        : "Karl Bishop, Chris Felix, and others",
   "main"          : "./main",
   "description"   : "Dojo-Worklight integration modules",
 	"licenses": [
@@ -12,12 +12,12 @@
 	],
 	"repository": {
     	"type" : "git",
-    	"url"  : "https://csnext.ibm.com/projects/isswweb/"
+    	"url"  : "https://github.com/kfbishop/dworklight.git"
   	},
     "dependencies": {
 	    "dojo"  : ["1.9"],
 	    "dijit" : ["1.9"],
 	    "dojox" : ["1.9"]
     },
-    "dojoBuild"     : "dwl.profile.js"
+    "dojoBuild"     : "dworklight.profile.js"
 }
