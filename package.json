@@ -15,9 +15,7 @@
     	"url"  : "https://github.com/kfbishop/dworklight.git"
   	},
     "dependencies": {
-	    "dojo"  : ["1.9"],
-	    "dijit" : ["1.9"],
-	    "dojox" : ["1.9"]
+	    "dojo"  : ["1.9"]
     },
     "dojoBuild"     : "dworklight.profile.js"
 }
