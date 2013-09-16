@@ -4,8 +4,8 @@
 require([
 	"module",
     "dojo/_base/lang",
-	"dojo/Deferred",
-], function(module, lang, Deferred,) {
+	"dojo/Deferred"
+], function(module, lang, Deferred) {
 
 	var MODULE = module.id;
 
@@ -13,8 +13,6 @@ require([
 		console.warn(MODULE,": Worklight libraries not available. Any 'wladapter' calls will fail!");
 	}
 
-	var request = {};
-	request = {
     //---------------------------------------------------------------------------------------
 	function request( /*map*/ args ) {
     	var def = new Deferred();
@@ -53,8 +51,7 @@ require([
     	}
 
         return def.promise;
-    };
-
+    }
 	return request;
 
 });

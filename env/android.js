@@ -9,8 +9,8 @@ define([
 	"dijit/registry",
 	"dojox/mobile",
 
-    "../sniff"  // for has test support
-    "../deviceReady!",
+    "../sniff",  // for has test support
+    "../deviceReady!"
 ], function(module, lang, has, query, registry, dmobile) {
 
 	//--------------------------------------------------------------------
@@ -47,7 +47,7 @@ define([
 
 	    	//-- Add back button handler?
 	    	if ( has("worklight-android") ) {
-		    	if ( a.backButtonAction && (a.backButtonAction != "default") ) {
+		    	if ( a.backButtonAction && (a.backButtonAction !== "default") ) {
 		  			//-- Handle Android back button
 					document.addEventListener("backbutton", a._backButtonHandler, false);
 		    	}
@@ -58,11 +58,11 @@ define([
 		_backButtonHandler: function (e) {
 			var F = MODULE + ":_backButtonHandler: ";
 
-			if ( a.backButtonAction == "none" ) { return; }
+			if ( a.backButtonAction === "none" ) { return; }
 
 			try {
 				if ( a.topLevelViews.indexOf( dmobile.currentView.id ) >= 0 ) {
-					console.debug(F,"Closing App!");
+					//console.debug(F,"Closing App!");
 			        WL.App && WL.App.close();
 				} else {
 					// Close the opened dialog(s) first one by one.
@@ -73,8 +73,8 @@ define([
 
     					    if (dialog.domNode.style.display !== "none") {
     					    	dialog.hide();
-    							console.log(F, "Closing the current active dialog");
-    						    if ( a.backButtonAction == "simple" ) { return; }
+    							//console.log(F, "Closing the current active dialog");
+    						    if ( a.backButtonAction === "simple" ) { return; }
     					    }
 					    }
 					}
@@ -83,14 +83,14 @@ define([
 					var openerNodes = query(".mblOpener.mblOverlay:not(.mblOverlayHidden)");
 					if (openerNodes && openerNodes.length) {
 					    registry.byId(openerNodes[0].id).hide();
-						console.log(F, "Closing the current active opener");
-						if ( a.backButtonAction == "simple" ) { return; }
+						//console.log(F, "Closing the current active opener");
+						if ( a.backButtonAction === "simple" ) { return; }
 					}
 
 					// Default is to go to back.
 					// backButtonAction == "view" || "simple" (no dialogs/openers)
-					console.log(F, "Performing the back of the current view");
-					imobile.currentView.back();
+					//console.log(F, "Performing the back of the current view");
+					dmobile.currentView.back();
 				}
 			} catch (e) {
 				console.error(F, "Cannot perform back operation. Error: ", e);

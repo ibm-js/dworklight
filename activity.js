@@ -5,7 +5,7 @@ define([
     "dojo/_base/window",
     "dojo/has",
     "dojo/topic",
-    "dojox/mobile/ProgressIndicator",
+    "dojox/mobile/ProgressIndicator"
 ], function(array, lang, win, has, topic, ProgressIndicator) {
 
 	var MODULE = module.id;

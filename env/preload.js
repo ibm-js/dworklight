@@ -64,17 +64,17 @@ if (deviceParam) {
 		break;
 	}
 }
-console.log("PRELOAD: Device:", device);
+//console.log("PRELOAD: Device:", device);
 
 // ----------------------------------------------------------------------------------
 // Custom worklight block that will allow very simple testing using HTTP server
 // ----------------------------------------------------------------------------------
-if (typeof (WL) == 'undefined' || WL == null) {
-	console.warn("PRELOAD: Worklight: Creating stub WL environment for HTTP only testing");
+if (typeof (WL) === "undefined" || WL === null) {
+	//console.warn("PRELOAD: Worklight: Creating stub WL environment for HTTP only testing");
 
 	var servicesUrl = location.href.substring(0, location.href.indexOf("/apps/services/")+15 );
 	WL = {
-		mock : 'true',
+		mock : true,
 		StaticAppProps : {
 			"APP_DISPLAY_NAME": "GERS Mobile",
 			"APP_SERVICES_URL": servicesUrl,
@@ -108,7 +108,7 @@ if (typeof (WL) == 'undefined' || WL == null) {
 			},
 			error : function() {
 				console.error(arguments);
-			},
+			}
 		},
 		Client : {
 			init : function() {

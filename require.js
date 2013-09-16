@@ -7,7 +7,7 @@ define([
     "dojo/_base/lang",
     "dojo/has",
 
-    "./sniff",
+    "./sniff"
 
 ], function(array, lang, has ) {
 
@@ -16,7 +16,7 @@ define([
 	//console.log("Worklight - Env setup");
 
 	//--------------------------------------------------------------------
-	function require(){
+	var require = {
 
 		//--------------------------------------------------------------------
 		getHostUrl: function(/*bool*/ fullWebApp) {
@@ -37,7 +37,7 @@ define([
 				} else {
 					// http://{host}:8080/apps/services/www/Main/mobilewebapp/
 					host = WL.Client.getAppProperty(WL.AppProperty.APP_SERVICES_URL);
-					if ( fullWebApp ) {
+					if( fullWebApp ) {
 						var appName = WL.Client.getAppProperty(WL.AppProperty.WORKLIGHT_ROOT_URL).match(/\/api\/([^\/]*)\/.*$/)[1];
 						host += "www/" + appName + "/mobilewebapp/default/";
 					}
@@ -50,7 +50,7 @@ define([
 		},
 
 		//--------------------------------------------------------------------
-		require : function( packages, modules, callback) {
+		wlRequire : function( packages, modules, callback) {
 			// summary:
 			//		Special require loader to retrieve on demand modules from WL mobilewebapp deployment
 			// description:
@@ -58,13 +58,13 @@ define([
 			//		build or deployment time. It assumes that the package is at the top level of
 			//		the mobilewebapp tree.
 			// example:
-			//	|	wl.require( ["rapp"],
+			//	|	wlRequire( ["rapp"],
 			//	|		["rapp/investment/InvestmentBijit"],
 			//	|		lang.hitch(this, function(InvestmentBijit) {
 			//	|			this.widget = new InvestmentBijit({}, "InvestmentViewContent");
 			//	|		}
 			//	|	));
-			var F = MODULE+".require(): ";
+			var F = MODULE+".wlRequire(): ";
 			var host = null, MODULEs = [];
 
 			packages = lang.isArray(packages) ? packages : [packages];
