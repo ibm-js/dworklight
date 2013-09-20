@@ -6,7 +6,7 @@ define([
     "dojo/has",
     "dojo/topic",
     "dojox/mobile/ProgressIndicator"
-], function(array, lang, win, has, topic, ProgressIndicator) {
+], function(module, array, lang, win, has, topic, ProgressIndicator) {
 
 	var MODULE = module.id;
 
