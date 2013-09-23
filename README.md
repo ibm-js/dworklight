@@ -30,6 +30,8 @@ This project requires the following other projects to run:
 
 TODO, but here's the general modules
 
+See the [kfbishop/dworklight-testapp](https://github.com/kfbishop/dworklight-testapp) project for tests and usage of the dworklight modules within a actual Worklight app.
+
 ### activity
 Simple activity control that allows for native or Dojo basic activity indicators.
 
