@@ -27,7 +27,7 @@
 //  "worklight-jsonstore"           Returns true is Worklight JSON store is supported.
 //--------------------------------------------------------------------
 
-define(["dojo/has", "./deviceReady!"]), function(has){
+define(["dojo/has"].concat(window.device?["dcordova/deviceReady!"]:[]), function(has){
 
 	var tabletSize = 500;
 	var desktopSize = 1024;
@@ -37,15 +37,15 @@ define(["dojo/has", "./deviceReady!"]), function(has){
 	});
 
 	has.add("worklight-android", function(){
-		return !!( has("worklight")  && (WL.Client.getEnvironment() == WL.Environment.ANDROID;
+		return !!( has("worklight") && WL.Client.getEnvironment() === WL.Environment.ANDROID);
 	});
 
 	has.add("worklight-iphone", function(){
-		return !!( has("worklight") && ( WL.Client.getEnvironment() == WL.Environment.IPHONE );
+		return !!( has("worklight") && WL.Client.getEnvironment() === WL.Environment.IPHONE );
 	});
 
 	has.add("worklight-ipad", function(){
-		return !!( has("worklight") && ( WL.Client.getEnvironment() == WL.Environment.IPAD );
+		return !!( has("worklight") && WL.Client.getEnvironment() === WL.Environment.IPAD );
 	});
 
 	has.add("worklight-ios", function(){
@@ -53,15 +53,12 @@ define(["dojo/has", "./deviceReady!"]), function(has){
 	});
 
 	has.add("worklight-webapp", function(){
-		return !!( has("worklight") && WL.Client.getEnvironment() == WL.Environment.WEB_APP );
+		return !!( has("worklight") && WL.Client.getEnvironment() === WL.Environment.WEB_APP );
 	});
 
 	has.add("worklight-tablet", function(){
-		return !!( has("worklight") &&
-			var dev = has("worklight-hybrid");
-			return ( dev && dev == WL.Environment.IPAD || (dev == WL.Environment.ANDROID && has("worklight-tablet-size") ) ) ? dev : false;
-		}
-		return false;
+		var dev = has("worklight-hybrid");
+		return ( dev && dev === WL.Environment.IPAD || (dev === WL.Environment.ANDROID && has("worklight-tablet-size") ) ) ? dev : false;
 	});
 
 	has.add("worklight-hybrid", function(){
@@ -91,34 +88,34 @@ define(["dojo/has", "./deviceReady!"]), function(has){
 	});
 
 	has.add("worklight-preview-android", function(){
-		return !!( has("worklight-preview") == WL.Environment.ANDROID );
+		return !!( has("worklight-preview") === WL.Environment.ANDROID );
 	});
 
 	has.add("worklight-preview-ipad", function(){
-		return !!(has("worklight-preview") == WL.Environment.IPAD );
+		return !!(has("worklight-preview") === WL.Environment.IPAD );
 	});
 
 	has.add("worklight-preview-iphone", function(){
-		return !!( has("worklight-preview") == WL.Environment.IPHONE );
+		return !!( has("worklight-preview") === WL.Environment.IPHONE );
 	});
 
 	has.add("worklight-preview-ios", function(){
 		var pre = has("worklight-preview");
-		return ( pre && (pre == WL.Environment.IPHONE || pre == WL.Environment.IPAD) ) ? pre : false;
+		return ( pre && (pre === WL.Environment.IPHONE || pre === WL.Environment.IPAD) ) ? pre : false;
 	});
 
 	has.add("worklight-preview-tablet", function(){
 		var pre = has("worklight-preview");
-		return ( pre && (pre == WL.Environment.IPAD || (pre == WL.Environment.ANDROID && has("worklight-tablet-size")) ) ? pre : false);
+		return ( pre && (pre === WL.Environment.IPAD || (pre === WL.Environment.ANDROID && has("worklight-tablet-size")) ) ? pre : false);
 	});
 
 	has.add("worklight-preview-webapp", function(){
-		return !!( has("worklight-preview") == WL.Environment.WEB_APP );
+		return !!( has("worklight-preview") === WL.Environment.WEB_APP );
 	});
 
 	has.add("worklight-phone-size", function(){
 		var sz = Math.min(window.innerHeight, window.innerWidth);
-		return !!( has("worklight") && sz < wl.tabletSize );
+		return !!( has("worklight") && sz < tabletSize );
 	});
 
 	has.add("worklight-tablet-size", function(){
@@ -141,7 +138,7 @@ define(["dojo/has", "./deviceReady!"]), function(has){
 	});
 
 	has.add("worklight-jsonstore", function(){
-		return !!(has("worklight-hybrid") && typeof WL.JSONStore !== 'undefined');
+		return !!(has("worklight-hybrid") && typeof WL.JSONStore !== "undefined");
 	});
 
 	return has;

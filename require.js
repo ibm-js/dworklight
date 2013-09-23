@@ -9,7 +9,7 @@ define([
 
     "./sniff"
 
-], function(array, lang, has ) {
+], function(module, array, lang, has ) {
 
 	//--------------------------------------------------------------------
 	var MODULE = module.id;
