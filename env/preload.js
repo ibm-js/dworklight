@@ -9,10 +9,10 @@
 // ----------------------------------------------------------------------------------
 window.mblConfig = window.mblConfig || {};
 if ( WL && !window.mblConfig.mblUserAgent ) {
-	
+
 	//-- Valid ?theme=Xxx settings: Holodark, Android, BlackBerry, iPhone, iPad, WindowsPhone, Custom
 	var theme = (location.search.match(/theme=(\w+)/) ? RegExp.$1 : "");
-	
+
 	//-- If WL Preview, derive intended proper theme.
 	if ( !theme && WL.Environment.PREVIEW === WL.Client.getEnvironment() ){
 		var lh = location.href;
@@ -22,9 +22,18 @@ if ( WL && !window.mblConfig.mblUserAgent ) {
 		else if ( lh.match(/\/preview\/.*\/blackberry/) ){ theme = "BlackBerry";   }
 		else if ( lh.match(/\/preview\/.*\/windows/)    ){ theme = "WindowsPhone"; }
 	}
-	
+
 	if ( theme ) {
 		console.log("Preload: Setting mblUserAgent to:", theme);
 		window.mblConfig.mblUserAgent = theme;
 	}
+}
+
+if ( cordova && !cordova.exec ) {
+    // stub cordova.exec to allow for simple browser testing
+    cordova.exec = function() {
+        console.warn("Preload: Stub Cordova exec called (no-op). Arguments:", arguments);
+    };
+    console.warn("Preload: Stub Cordova firing artificial deviceready event");
+    cordova.fireDocumentEvent("deviceready", {} );
 }

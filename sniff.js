@@ -27,7 +27,7 @@
 //  "worklight-jsonstore"           Returns true is Worklight JSON store is supported.
 //--------------------------------------------------------------------
 
-define(["dojo/has"].concat(window.device?["dcordova/deviceReady!"]:[]), function(has){
+define(["dojo/has"].concat(window.cordova?["dcordova/deviceReady!"]:[]), function(has){
 
 	var tabletSize = 500;
 	var desktopSize = 1024;
