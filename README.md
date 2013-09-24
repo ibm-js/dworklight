@@ -39,19 +39,16 @@ See the [kfbishop/dworklight-testapp](https://github.com/kfbishop/dworklight-tes
 Simple activity control that allows for native or Dojo basic activity indicators.
 
 ### console
-WL console logging adapter
+Worklight console logging adapter
 
-### deviceReady
-Device Ready detection (taken from dcordova project)
+### features
+'Has' feature detection for Worklight
 
 ### request
-WL Adapter integration to feel more like a normal dojo/request style
+Worklight Adapter integration to feel more like a normal dojo/request style
 
 ### require
-WL Custom AMD require support
-
-### sniff
-'Has' feature detection for WL
+Worklight Custom AMD require support
 
 ### env
 Environment specific modules
@@ -60,7 +57,7 @@ Environment specific modules
 Android specific support. Currently support back button handling
 
 #### env/preload
-Preloader to mock WL env and set device type.
+Preloader to mock Worklight env and set device type.
 
 ### stores
 Worklight Stores

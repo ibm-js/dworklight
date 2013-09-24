@@ -5,7 +5,7 @@ define([
 	"dojo/_base/lang",
 	"dojo/aspect",
 	"dojo/has",
-	"./sniff"
+	"./features"
 ], function(module, array, json, lang, aspect, has) {
 
 	var MODULE = module.id;

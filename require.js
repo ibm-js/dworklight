@@ -7,7 +7,7 @@ define([
     "dojo/_base/lang",
     "dojo/has",
 
-    "./sniff"
+    "./features"
 
 ], function(module, array, lang, has ) {
 

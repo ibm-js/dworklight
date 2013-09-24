@@ -9,7 +9,7 @@ define([
 	"dijit/registry",
 	"dojox/mobile",
 
-    "../sniff",  // for has test support
+    "../features",  // for has test support
     "../deviceReady!"
 ], function(module, lang, has, query, registry, dmobile) {
 
