@@ -2,11 +2,11 @@
 // Module: dworklight/main
 //---------------------------------------------------------------------------------
 require([
-   	"dcordova/sniff",
+   	"dcordova/features",
 	"dworklight/activity",
 	"dworklight/request",
 	"dworklight/require",
-	"dworklight/sniff",
+	"dworklight/features",
 	"dworklight/console"
 ], function() {
 

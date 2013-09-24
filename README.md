@@ -7,7 +7,7 @@ No official release yet.
 
 ## Licensing
 
-This project is distributed by the Dojo Foundation and licensed under the Dojo dual license [BSD/AFLv2 license](http://dojotoolkit.org/license).
+This project is distributed by the Dojo Foundation and licensed under the ["New" BSD License](https://github.com/ibm-dojo/dcordova/blob/master/LICENSE).
 All contributions require a [Dojo Foundation CLA](http://dojofoundation.org/about/claForm).
 
 ## Dependencies
@@ -15,11 +15,14 @@ All contributions require a [Dojo Foundation CLA](http://dojofoundation.org/abou
 This project requires the following other projects to run:
  * dojo
  * dojox/mobile
+ * dcordova
+
 
 ## Installation
 
 * Manual installation by dropping dworklight as a sibling of the top level Dojo modules:
  * dojo
+ * dcordova
  * dworklight
 
  To install the latest master, go to the root Dojo installation directory and clone dworklight from github

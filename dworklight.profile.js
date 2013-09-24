@@ -4,7 +4,7 @@ var profile = (function(){
 		copyOnly = function(filename, mid){
 			var list = {
 				// these are test modules that are not intended to ever be built
-				"dworklight/env/mock":1,		// Normal JS file, Non AMD based
+				"dworklight/env/preload":1,		// Normal JS file, Non AMD based
 				"dworklight/dworklight.profile":1,
 				"dworklight/package.json":1,
 				"dworklight/tests":1
