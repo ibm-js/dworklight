@@ -2,7 +2,7 @@
   "name"          : "dworklight",
   "version"       : "0.1-dev",
   "description"   : "Dojo-Worklight integration modules",
-  "authors"  : [
+  "contributors"  : [
   	"Karl Bishop <kfbishop@us.ibm.com>"
   ],
   "licenses": [
