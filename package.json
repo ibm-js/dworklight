@@ -1,27 +1,25 @@
 {
   "name"          : "dworklight",
-  "version"       : "1.9",
-  "author"        : "Karl Bishop <kfbishop@us.ibm.com>"
-  "contributors"  : [
-    "Chris Felix <, and others"
-  ],
-  "main"          : "./main",
+  "version"       : "0.1-dev",
   "description"   : "Dojo-Worklight integration modules",
-	"licenses": [
-    	{
-        	"type": "AFLv2.1",
-        	"url": "http://trac.dojotoolkit.org/browser/dojo/trunk/LICENSE#L43"
-     	}
-	],
+  "authors"  : [
+  	"Karl Bishop <kfbishop@us.ibm.com>"
+  ],
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "http://trac.dojotoolkit.org/browser/dojo/trunk/LICENSE#L13"
+    }
+  ],
 	"repository": {
-    	"type" : "git",
-    	"url"  : "https://github.com/kfbishop/dworklight.git"
-  	},
-    "dependencies": {
-	    "dojo"     : ["1.9"],
-	    "dijit"    : ["1.9"],
-	    "dojox"    : ["1.9"]
-      "dcordova" : ["1.9"],
-    },
-    "dojoBuild"     : "dworklight.profile.js"
+    "type" : "git",
+    "url"  : "https://github.com/ibm-dojo/dworklight.git"
+  },
+  "dependencies": {
+    "dojo"     : ["1.9"],
+    "dijit"    : ["1.9"],
+    "dojox"    : ["1.9"],
+    "dcordova" : ["0.1"]
+  },
+  "dojoBuild"     : "package.js"
 }
