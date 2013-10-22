@@ -1,7 +1,7 @@
 {
   "name": "dworklight",
   "version": "1.0.0",
-  "description": "Dojo-Worklight integration modules",
+  "description": "Build env for: Dojo-Worklight integration modules",
   "keywords": [
     "worklight",
     "dojo",
@@ -10,15 +10,14 @@
     "mobile",
     "hybrid"
   ],
-  "homepage": "https://github.com/kfbishop/dworklight-testapp",
-  "bugs": "https://github.com/kfbishop/dworklight-testapp/issues",
+  "homepage": "https://github.com/ibm-dojo/dworklight",
+  "bugs": "https://github.com/ibm-dojo/dworklight/issues",
   "contributors": [
-    "Karl Bishop <kfbishop@us.ibm.com>",
-    "Chris Felix <chrisfel@ca.ibm.com>"
+    "Karl Bishop <kfbishop@us.ibm.com>"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/kfbishop/dworklight.git"
+    "url": "https://github.com/ibm-dojo/dworklight.git"
   },
   "licenses": [
     {
@@ -45,7 +44,7 @@
     "grunt-bower-task": "~0.3.2",
     "grunt-shell": "~0.4.0",
     "grunt-dojo": "~0.2.4",
-    "grunt-madge": "0.0.1"
+    "grunt-dojo-build-profile": "0.0.1"
   },
   "dojoBuild": "package.js"
 }

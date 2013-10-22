@@ -58,7 +58,8 @@ define(["dojo/has"].concat(window.cordova?["dcordova/deviceReady!"]:[]), functio
 
 	has.add("worklight-tablet", function(){
 		var dev = has("worklight-hybrid");
-		return ( dev && dev === WL.Environment.IPAD || (dev === WL.Environment.ANDROID && has("worklight-tablet-size") ) ) ? dev : false;
+		return ( dev && dev === WL.Environment.IPAD ||
+		       ( dev === WL.Environment.ANDROID && has("worklight-tablet-size") ) ) ? dev : false;
 	});
 
 	has.add("worklight-hybrid", function(){
@@ -88,15 +89,15 @@ define(["dojo/has"].concat(window.cordova?["dcordova/deviceReady!"]:[]), functio
 	});
 
 	has.add("worklight-preview-android", function(){
-		return !!( has("worklight-preview") === WL.Environment.ANDROID );
+		return ( has("worklight-preview") === WL.Environment.ANDROID );
 	});
 
 	has.add("worklight-preview-ipad", function(){
-		return !!(has("worklight-preview") === WL.Environment.IPAD );
+		return (has("worklight-preview") === WL.Environment.IPAD );
 	});
 
 	has.add("worklight-preview-iphone", function(){
-		return !!( has("worklight-preview") === WL.Environment.IPHONE );
+		return ( has("worklight-preview") === WL.Environment.IPHONE );
 	});
 
 	has.add("worklight-preview-ios", function(){
@@ -106,11 +107,12 @@ define(["dojo/has"].concat(window.cordova?["dcordova/deviceReady!"]:[]), functio
 
 	has.add("worklight-preview-tablet", function(){
 		var pre = has("worklight-preview");
-		return ( pre && (pre === WL.Environment.IPAD || (pre === WL.Environment.ANDROID && has("worklight-tablet-size")) ) ? pre : false);
+		return ( pre && (pre === WL.Environment.IPAD ||
+			   ( pre === WL.Environment.ANDROID && has("worklight-tablet-size")) ) ? pre : false);
 	});
 
 	has.add("worklight-preview-webapp", function(){
-		return !!( has("worklight-preview") === WL.Environment.WEB_APP );
+		return ( has("worklight-preview") === WL.Environment.WEB_APP );
 	});
 
 	has.add("worklight-phone-size", function(){

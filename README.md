@@ -20,6 +20,27 @@ This project requires the following other projects to run:
 
 ## Installation
 
+Prerequisites:
+- [NodeJS](http://nodejs.org/) for NPM install.
+	- The magic goo that makes all things true
+- [Grunt]() Command Line automation framework
+	- `npm install -g grunt-cli`
+- [Bower](http://bower.io/) package management
+	- `npm install -g bower`
+
+
+Developers - Manual installation procedure:
+
+1. Ensure prereqs are installed
+2. Install this project by cloning from github
+	- `git clone git://github.com/ibm-dojo/dworklight.git`
+	- `cd dworklight`
+3. Install external required packages
+	- `npm install`
+4. Put required modules in the right places
+	- `grunt bower`
+
+
 * Manual installation by dropping dworklight as a sibling of the top level Dojo modules:
  * dojo
  * dcordova

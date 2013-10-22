@@ -1,0 +1,29 @@
+{
+  "name": "dworklight",
+  "version": "1.0.0",
+  "description": "Worklight helper modules",
+  "authors": [
+    "kfbishop <kfbishop@gmail.com>"
+  ],
+  "dependencies": {
+    "dojo": ">=1.9.1"
+  },
+  "devDependencies" : {
+    "dcordova"   : "ibm-dojo/dcordova",
+    "dworklight" : "ibm-dojo/dworklight"
+  },
+  "keywords": [
+    "worklight",
+    "mobile",
+    "dworklight",
+    "dcordova"
+  ],
+  "license": "BSD",
+  "ignore": [
+    "**/.*",
+    "CONTRIBUTING.md",
+    "build",
+    "test",
+    "tests"
+  ]
+}

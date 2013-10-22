@@ -3,13 +3,12 @@
 //-------------------------------------------------------------------------
 define([
 	"module",
-    "dojo/_base/array",
     "dojo/_base/lang",
     "dojo/has",
 
     "./features"
 
-], function(module, array, lang, has ) {
+], function(module, lang, has ) {
 
 	//--------------------------------------------------------------------
 	var MODULE = module.id;
@@ -26,7 +25,6 @@ define([
 			//		Note: The worklight server is not defined until after WL.init() has completed!
 			//	fullWebApp: bool
 			//		Returns the fully qualified mobilewebapp url
-			var F = MODULE+".getHostUrl:";
 			var host;
 			if ( has("worklight") ) {
 				//-- We need to get the app name based on the api
@@ -64,7 +62,6 @@ define([
 			//	|			this.widget = new InvestmentBijit({}, "InvestmentViewContent");
 			//	|		}
 			//	|	));
-			var F = MODULE+".wlRequire(): ";
 			var host = null, MODULEs = [];
 
 			packages = lang.isArray(packages) ? packages : [packages];
@@ -74,7 +71,7 @@ define([
 			host = this.getHostUrl(true);
 
 			//-- build up packages array / map
-			array.forEach(packages, function(MODULE) {
+			packages.forEach(function(MODULE) {
 				MODULEs.push( {name:MODULE, location:host+MODULE} );
 			});
 
