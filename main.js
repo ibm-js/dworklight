@@ -2,7 +2,7 @@
 // Module: dworklight/main
 //---------------------------------------------------------------------------------
 require([
-   	"dcordova/features",
+	"dcordova/features",
 	"dworklight/activity",
 	"dworklight/request",
 	"dworklight/require",

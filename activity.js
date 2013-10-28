@@ -1,124 +1,111 @@
 define([
-   	"dojo/_base/array",
-   	"dojo/_base/lang",
+    "dojo/_base/lang",
     "dojo/_base/window",
     "dojo/has",
     "dojo/topic",
     "dojox/mobile/ProgressIndicator"
-], function(array, lang, win, has, topic, ProgressIndicator){
+], function(lang, win, has, topic, ProgressIndicator) {
 
-	var a = {};
-	a = {
+    var a = {
 
-		defaultMessage : "Loading",
+        defaultMessage : "Loading",
 
-		useNative   : true,
+        useNative   : true,
 
-		iosOptions  : {
-			"bounceAnimation" : false,
-			"textColor"       : "#FFFFFF",
-			"fullScreen"      : false,
-			"duration"        : 0,
-			"minDuration"     : 2
-		},
+        iosOptions  : {
+            "bounceAnimation" : false,
+            "textColor"       : "#FFFFFF",
+            "fullScreen"      : false,
+            "duration"        : 0,
+            "minDuration"     : 2
+        },
 
-		containerId : "",
+        containerId : "",
 
-		topics : {
-	        start   : "activity/start",
-	        stop    : "activity/stop"
-		},
+        topics : {
+            start   : "activity/start",
+            stop    : "activity/stop"
+        },
 
-		_busy : false,
+        _busy : false,
 
-	    //------------------------------------------------------------------------
-	    init : function( /*Map*/config ){
-	        // summary:
-	        //      Initializer.
-	        // config: Map
-	        //		Map of config settings
-	        //		{
-	        //			defaultMessage : "Loading...",
-	        //			useNative      : true,
-	        //			iosOptions     : {
-			//	        	"bounceAnimation" : false,
-	        //				"textColor"       : "#FFFFFF",
-	        //				"fullScreen"      : false,
-	        //				"duration"        : 0,
-	        //				"minDuration"     : 2
-	        //			},
-			//	        containerId   : "someNodeId"
-		    //	    }
-	    	// tags:
-			//		public
-	    	lang.mixin(a, config);
-		    if( !has("worklight-hybrid") ){
-		    	a.useNative = false;
-		    }
-	    },
+        //------------------------------------------------------------------------
+        init : function( /*Map*/config ) {
+            // summary:
+            //      Initializer.
+            // config: Map
+            //      Map of config settings
+            //      {
+            //          defaultMessage : "Loading...",
+            //          useNative      : true,
+            //          iosOptions     : {
+            //              "bounceAnimation" : false,
+            //              "textColor"       : "#FFFFFF",
+            //              "fullScreen"      : false,
+            //              "duration"        : 0,
+            //              "minDuration"     : 2
+            //          },
+            //          containerId   : "someNodeId"
+            //      }
+            // tags:
+            //      public
+            lang.mixin(a, config);
+            if( !has("worklight-hybrid") ) {
+                a.useNative = false;
+            }
+        },
 
-		//--------------------------------------------------------------------
-		start : function( args ){
-			if( a._busy ){
-				a.stop();
-			}
-			if( a.useNative ){
-				var opts;
-				if ( has("worklight-ios") ){
-					opts = lang.clone( a.iosOptions );
-					if( lang.isString(args) ){
-						opts.text = args;
-					}else{
-						//-- WL is WAAAY picky about what arguments it gets
-						opts.text = args.text || args.message || a.defaultMessage;
-						array.forEach(["bounceAnimation", "textColor", "fullScreen", "duration", "minDuration"], function(o){
-							if( typeof args[o] !== "undefined"){
-								opts[o] = args[o];
-							}
-						});
-					}
-				}else{
-					// Anything else
-					opts = {
-						text : lang.isString(args) ? args : (args.text || args.message || a.defaultMessage)
-					};
-				}
-				var target = args.target || a.containerId;
-				a._busy = new WL.BusyIndicator( target, opts);
-				a._busy.show();
-			}else{
-				a._busy = ProgressIndicator.getInstance();
-				win.body().appendChild( a._busy.domNode );
-				a._busy.start();
-			}
-		},
+        //--------------------------------------------------------------------
+        start : function( args ) {
+            var opts = has("worklight-ios") ? lang.clone( a.iosOptions ) : {};
+            opts.text = lang.isString(args) ? args : (args.text || args.message || a.defaultMessage);
 
-		//--------------------------------------------------------------------
-		stop : function(){
-			// Stop
-			if(a._busy ){
-				if( a.useNative ){
-					a._busy.hide();
-				}else{
-					a._busy.stop();
-				}
-				a._busy = null;
-			}
-		},
+            if( a._busy ) {
+                a.stop();
+            }
+            if( a.useNative ) {
+                //-- WL is WAAAY picky about what arguments it gets
+                ["bounceAnimation", "textColor", "fullScreen", "duration", "minDuration"].forEach( function(o){
+                    if( typeof args[o] !== "undefined"){
+                        opts[o] = args[o];
+                    }
+                });
+                var target = args.target || a.containerId;
+                a._busy = new WL.BusyIndicator( target, opts);
+                a._busy.show();
+            }else{
+                a._busy = ProgressIndicator.getInstance();
+                win.body().appendChild( a._busy.domNode );
+                a._busy.start();
+            }
+        },
 
-	    /////////////////// PRIVATE METHODS //////////////////
+        //--------------------------------------------------------------------
+        stop : function(){
+            // Stop
+            if(a._busy ){
+                if( a.useNative ){
+                    a._busy.hide();
+                }else{
+                    a._busy.stop();
+                }
+                a._busy = null;
+            }
+        },
 
-	    //------------------------------------------------------------------------
-	    _init : function(){
-	        // summary:
-	        //      Initializer.
-	    	// tags:
-			//	private
-	        topic.subscribe( a.topics.start, a.start );
-	        topic.subscribe( a.topics.stop , a.stop );
-	        a.init({});
-	    }
-	};
-	a._init();
-	return a;
+        /////////////////// PRIVATE METHODS //////////////////
+
+        //------------------------------------------------------------------------
+        _init : function(){
+            // summary:
+            //      Initializer.
+            // tags:
+            //  private
+            topic.subscribe( a.topics.start, a.start );
+            topic.subscribe( a.topics.stop , a.stop );
+            a.init({});
+        }
+    };
+    a._init();
+    return a;
 });

@@ -1,3 +1,4 @@
+/* jshint devel:true */
 //-----------------------------------------------------------------------------
 // Generic JS file to establish some environment setting BEFORE dojo is loaded
 //-----------------------------------------------------------------------------
@@ -29,11 +30,11 @@ if ( WL && !window.mblConfig.mblUserAgent ) {
 	}
 }
 
-if ( cordova && !cordova.exec ) {
+if ( window.cordova && !window.cordova.exec ) {
     // stub cordova.exec to allow for simple browser testing
-    cordova.exec = function() {
+    window.cordova.exec = function() {
         console.warn("Preload: Stub Cordova exec called (no-op). Arguments:", arguments);
     };
     console.warn("Preload: Stub Cordova firing artificial deviceready event");
-    cordova.fireDocumentEvent("deviceready", {} );
+    window.cordova.fireDocumentEvent("deviceready", {} );
 }

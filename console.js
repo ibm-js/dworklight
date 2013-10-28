@@ -1,14 +1,12 @@
+/*jshint devel:true */
 define([
-	"module",
-	"dojo/_base/array",
 	"dojo/_base/json",
 	"dojo/_base/lang",
 	"dojo/aspect",
 	"dojo/has",
 	"./features"
-], function(module, array, json, lang, aspect, has) {
+], function(json, lang, aspect, has) {
 
-	var MODULE = module.id;
 	var hc = {
 		_init        : false
 	};
@@ -21,7 +19,8 @@ define([
 
 			var _logProcess = function() {
 				var out = [];
-				array.forEach(arguments, function(item) {
+				//-- convert arguments to real array
+				Array.prototype.slice.call(arguments).forEach(function(item) {
 					if ( lang.isString(item) || !isNaN(item) ) {
 						out.push(item);
 					} else if ( item === null ) {

@@ -2,18 +2,12 @@
 // Module: dworklight/require
 //-------------------------------------------------------------------------
 define([
-	"module",
-    "dojo/_base/array",
     "dojo/_base/lang",
     "dojo/has",
 
     "./features"
 
-], function(module, array, lang, has ) {
-
-	//--------------------------------------------------------------------
-	var MODULE = module.id;
-	//console.log("Worklight - Env setup");
+], function(lang, has ) {
 
 	//--------------------------------------------------------------------
 	var require = {
@@ -26,7 +20,6 @@ define([
 			//		Note: The worklight server is not defined until after WL.init() has completed!
 			//	fullWebApp: bool
 			//		Returns the fully qualified mobilewebapp url
-			var F = MODULE+".getHostUrl:";
 			var host;
 			if ( has("worklight") ) {
 				//-- We need to get the app name based on the api
@@ -38,7 +31,8 @@ define([
 					// http://{host}:8080/apps/services/www/Main/mobilewebapp/
 					host = WL.Client.getAppProperty(WL.AppProperty.APP_SERVICES_URL);
 					if( fullWebApp ) {
-						var appName = WL.Client.getAppProperty(WL.AppProperty.WORKLIGHT_ROOT_URL).match(/\/api\/([^\/]*)\/.*$/)[1];
+						var appName = WL.Client.getAppProperty(WL.AppProperty.WORKLIGHT_ROOT_URL)
+							.match(/\/api\/([^\/]*)\/.*$/)[1];
 						host += "www/" + appName + "/mobilewebapp/default/";
 					}
 				}
@@ -64,7 +58,6 @@ define([
 			//	|			this.widget = new InvestmentBijit({}, "InvestmentViewContent");
 			//	|		}
 			//	|	));
-			var F = MODULE+".wlRequire(): ";
 			var host = null, MODULEs = [];
 
 			packages = lang.isArray(packages) ? packages : [packages];
@@ -74,7 +67,7 @@ define([
 			host = this.getHostUrl(true);
 
 			//-- build up packages array / map
-			array.forEach(packages, function(MODULE) {
+			packages.forEach(function(MODULE) {
 				MODULEs.push( {name:MODULE, location:host+MODULE} );
 			});
 
