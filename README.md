@@ -86,8 +86,12 @@ Android specific support. Currently support back button handling.
 #### env/preload
 Preloader to mock Worklight env and set device type.
 
-### stores
+### store
 Worklight Stores
+
+#### store/JSON
+
+#### store/Adapter
 
 #### stores/WorklightStore
 API to enable direct access ot both JSONStore and EncryptedCache
