@@ -9,7 +9,7 @@ You are free to implement "backend" Create Read Update and Delete (CRUD) methods
 
 To use the store, do the following:
 
-1. Create the JSON store for the local collection, and set it on the WorklightStore so it can use it as an offline cache.  For instance, in the following code block, we create a "Transaction" collection.
+1. Create the JSON store for the local collection, and set it on the JSON Store so it can use it as an offline cache.  For instance, in the following code block, we create a "Transaction" collection.
 
 ```
 require([
