@@ -1,5 +1,5 @@
 {
-	"global" : ["WL"],
+	"globals": {"require":true, "define":true, "WL":true },
 	"asi": false,
 	"bitwise": false,
 	"boss": false,
@@ -64,7 +64,6 @@
 	"maxlen": 120,
 	"indent": 4,
 	"maxerr": 250,
-	"predef": [ "require", "define" ],
 	"quotmark": "double",
 	"maxcomplexity": 10
 

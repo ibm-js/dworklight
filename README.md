@@ -2,6 +2,8 @@
 # dworklight : Dojo - Worklight Libraries
 This project contains several modules to assist in using Dojo within the IBM Worklight platform.
 
+[Discuss or ask questions](http://ost.io/@ibm-dojo/dworklight)
+
 ## Status
 
 No official release yet.

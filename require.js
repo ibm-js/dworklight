@@ -2,17 +2,12 @@
 // Module: dworklight/require
 //-------------------------------------------------------------------------
 define([
-	"module",
     "dojo/_base/lang",
     "dojo/has",
 
     "./features"
 
-], function(module, lang, has ) {
-
-	//--------------------------------------------------------------------
-	var MODULE = module.id;
-	//console.log("Worklight - Env setup");
+], function(lang, has ) {
 
 	//--------------------------------------------------------------------
 	var require = {
@@ -36,7 +31,8 @@ define([
 					// http://{host}:8080/apps/services/www/Main/mobilewebapp/
 					host = WL.Client.getAppProperty(WL.AppProperty.APP_SERVICES_URL);
 					if( fullWebApp ) {
-						var appName = WL.Client.getAppProperty(WL.AppProperty.WORKLIGHT_ROOT_URL).match(/\/api\/([^\/]*)\/.*$/)[1];
+						var appName = WL.Client.getAppProperty(WL.AppProperty.WORKLIGHT_ROOT_URL)
+							.match(/\/api\/([^\/]*)\/.*$/)[1];
 						host += "www/" + appName + "/mobilewebapp/default/";
 					}
 				}
