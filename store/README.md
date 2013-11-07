@@ -64,7 +64,7 @@ store.set("queryBackend",lang.hitch(this,function(query,options){
 store.set("putBackend",lang.hitch(this,function(object,options){
 	var def = new Deferred();
 	//do something to send object updates to the backend.  If there is a conflict (i.e. 409 status code) then you should
-	//reject the deferred with an errorObject = {status: 409}. This will cause the object to be removed from the local
+	//reject the deferred with an errorObject = {statusCode: 409}. This will cause the object to be removed from the local
 	//JSONStore collection.
 	...
 	return def.promise;
@@ -74,7 +74,7 @@ store.set("putBackend",lang.hitch(this,function(object,options){
 store.set("addBackend",lang.hitch(this,function(object,options){
 	var def = new Deferred();
 	//do something to send new object to the backend.  If there is a conflict (i.e. 409 status code) then you should
-	//reject the deferred with an errorObject = {status: 409}. The object will not be added to the JSONStore collection
+	//reject the deferred with an errorObject = {statusCode: 409}. The object will not be added to the JSONStore collection
 	//in this case.
 	...
 	return def.promise;
