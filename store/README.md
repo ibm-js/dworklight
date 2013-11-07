@@ -9,7 +9,7 @@ You are free to implement "backend" Create Read Update and Delete (CRUD) methods
 
 To use the store, do the following:
 
-1. Create the JSON store for the local collection, and set it on the WorklightStore so it can use it as an offline cache.  For instance, in the following code block, we create a "Transaction" collection.
+1. Create the JSON store for the local collection, and set it on the JSON Store so it can use it as an offline cache.  For instance, in the following code block, we create a "Transaction" collection.
 
 ```
 require([
@@ -64,8 +64,8 @@ store.set("queryBackend",lang.hitch(this,function(query,options){
 store.set("putBackend",lang.hitch(this,function(object,options){
 	var def = new Deferred();
 	//do something to send object updates to the backend.  If there is a conflict (i.e. 409 status code) then you should
-	//reject the deferred with an errorObject = {status: 409}. This will cause the object to be removed from the local
-	//JSONStore collection cache.
+	//reject the deferred with an errorObject = {statusCode: 409}. This will cause the object to be removed from the local
+	//JSONStore collection.
 	...
 	return def.promise;
 
@@ -74,8 +74,8 @@ store.set("putBackend",lang.hitch(this,function(object,options){
 store.set("addBackend",lang.hitch(this,function(object,options){
 	var def = new Deferred();
 	//do something to send new object to the backend.  If there is a conflict (i.e. 409 status code) then you should
-	//reject the deferred with an errorObject = {status: 409}. This will cause the object to be removed from the local
-	//JSONStore collection cache.
+	//reject the deferred with an errorObject = {statusCode: 409}. The object will not be added to the JSONStore collection
+	//in this case.
 	...
 	return def.promise;
 
