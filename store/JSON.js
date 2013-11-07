@@ -6,8 +6,7 @@ define([
     "dojo/Stateful",
     "dojo/store/util/SimpleQueryEngine",
     "dojo/store/util/QueryResults",
-    "dojo/has",
-    "../features"
+    "dojo/has"
 ],function(declare,lang,when,Deferred,Stateful,SimpleQueryEngine,queryResults, has){
 
     return declare([Stateful],{
@@ -51,6 +50,15 @@ define([
         // removeBackend: function
         //      A pointer to the function used to remove an object from the backend
         removeBackend : null,
+        
+        // collectionInitClass: String
+        //		The name of the AMD class (full path) that can be used to bootstrap the WL.JSONStore collection.  The class should be a 
+        //		singleton. That is, you return an instance of the class from the AMD define.
+        collectionInitClass : null,
+        
+        // collectionInitMethod: String
+        //		The name of the method in collectionInitClass that actually bootstraps the WL.JSONStore collection
+        collectionInitMethod : null,
 
         constructor : function(args){
             lang.mixin(this,args);
@@ -87,20 +95,46 @@ define([
             return def.promise;
         },
 
-        query : function(query,options){
+        query : function(query,options,def){
             // summary:
             //      Queries the store using the provided query.
             // query: Object
             //      dojo/store/util/SimpleQueryEngine compatible query.
             // options: Object
             //      Optional. {start : Number, count : Number, sort : [{attribute : String, descending: boolean}]}
-            var def = new Deferred();
+        	if(!def){
+        		def = new Deferred();	
+        	}//end if
+        	
             if(!this.collection){
-                // The JSONStore collection is not set on this instance of WorklightStore. Returning empty array.
-                // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
-                def.resolve([]);//TODO: format of error object from JSONStore;
-                return def.promise;
-            }
+            	console.warn("No WL.JSONStore collection has been defined for this store");
+            	if(this.collectionInitClass && this.collectionInitMethod){
+            		console.debug("Attempting to init the collection via",this.collectionInitClass,this.collectionInitMethod);
+            		require([this.collectionInitClass],lang.hitch(this,function(LocalStorageInst){
+            			//The class should be a singleton!
+            			when(LocalStorageInst[this.collectionInitMethod](),
+            			lang.hitch(this,function(col){
+            				if(col){
+            					this.set("collection",col);
+            					console.debug("The collection has been initialized",col);
+                    			this.query(query, options,def);
+            				}else{
+            					console.error("The collection was undefined");
+            					def.reject(undefined);
+            				}//end if
+            			}),
+            			lang.hitch(this,function(error){
+            				console.error("There was an error calling",this.collectionInitClass,this.collectionInitMethod,error);
+            				def.reject(undefined);
+            			}));
+            		}));
+            	}else{
+            		 // The JSONStore collection is not set on this instance of WorklightStore and neither is collectionInitMethod. Returning empty array.
+                    // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
+                    def.reject(undefined);//TODO: format of error object from JSONStore;
+            	}//end if
+            	return def.promise;
+            }//end if
 
             if(this.queryBackend){
                 when(this.queryBackend(query,options),
@@ -113,24 +147,53 @@ define([
                 );
             }else{
                 // There is no backend query function set. You can set one with this.set("queryBackend",method)
-            }
+            	this._queryLocal(query, options, def);
+            }//end if
             return queryResults(def);
         },
 
-        add : function(object,options){
+        add : function(object,options,def){
             // summary:
             //      Used to add an item to the collection
             // object: Object
             //      The obejct to add to the collection
             //  options: Object
             //      The options object
-            var def = new Deferred();
+            
+        	if(!def){
+        		def = new Deferred();	
+        	}//end if
+        	
             if(!this.collection){
-                // The JSONStore collection is not set on this instance of WorklightStore. No op. Please set
-                // the collection via this.set('collection',WL.JSONStore.get(collectioName))
-                def.reject();
-                return def.promise;
-            }
+            	console.warn("No WL.JSONStore collection has been defined for this store");
+            	if(this.collectionInitClass && this.collectionInitMethod){
+            		console.debug("Attempting to init the collection via",this.collectionInitClass,this.collectionInitMethod);
+            		require([this.collectionInitClass],lang.hitch(this,function(LocalStorageInst){
+            			//The class should be a singleton!
+            			when(LocalStorageInst[this.collectionInitMethod](),
+            			lang.hitch(this,function(col){
+            				if(col){
+            					this.set("collection",col);
+            					console.debug("The collection has been initialized",col);
+                    			this.add(object, options,def);
+            				}else{
+            					console.error("The collection was undefined");
+            					def.reject(undefined);
+            				}//end if
+            			}),
+            			lang.hitch(this,function(error){
+            				console.error("There was an error calling",this.collectionInitClass,this.collectionInitMethod,error);
+            				def.reject(undefined);
+            			}));
+            		}));
+            	}else{
+            		 // The JSONStore collection is not set on this instance of WorklightStore and neither is collectionInitMethod. Returning empty array.
+                    // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
+                    def.reject(undefined);//TODO: format of error object from JSONStore;
+            	}//end if
+            	return def.promise;
+            }//end if
+
             //this.collection.removeCollection();
             if(this.addBackend){
                 // The backend add method is defined.  Call it in order to send the object to the backend store
@@ -139,7 +202,7 @@ define([
                         this._addBackendSuccess(updatedObject,options,def);
                     }),
                     lang.hitch(this,function(errorObject){
-                        this._addBackendFail(errorObject,options,def);
+                        this._addBackendFail(object,errorObject,options,def);
                     })
                 );
             }else{
@@ -150,20 +213,47 @@ define([
             return def.promise;
         },
 
-        put : function(object,options){
+        put : function(object,options,def){
             // summary:
             //      This method is used to update an item in the store
             // object: Object
             //      The dojo store item to update
             // options: Object
             //      The update options
-            var def = new Deferred();
+           
+        	if(!def){
+        		def = new Deferred();	
+        	}//end if
+        	
             if(!this.collection){
-                // The JSONStore collection is not set on this instance of WorklightStore. No op.
-                // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
-                def.reject();
-                return def.promise;
-            }
+            	console.warn("No WL.JSONStore collection has been defined for this store");
+            	if(this.collectionInitClass && this.collectionInitMethod){
+            		console.debug("Attempting to init the collection via",this.collectionInitClass,this.collectionInitMethod);
+            		require([this.collectionInitClass],lang.hitch(this,function(LocalStorageInst){
+            			//The class should be a singleton!
+            			when(LocalStorageInst[this.collectionInitMethod](),
+            			lang.hitch(this,function(col){
+            				if(col){
+            					this.set("collection",col);
+            					console.debug("The collection has been initialized",col);
+                    			this.put(object, options,def);
+            				}else{
+            					console.error("The collection was undefined");
+            					def.reject(undefined);
+            				}//end if
+            			}),
+            			lang.hitch(this,function(error){
+            				console.error("There was an error calling",this.collectionInitClass,this.collectionInitMethod,error);
+            				def.reject(undefined);
+            			}));
+            		}));
+            	}else{
+            		 // The JSONStore collection is not set on this instance of WorklightStore and neither is collectionInitMethod. Returning empty array.
+                    // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
+                    def.reject(undefined);//TODO: format of error object from JSONStore;
+            	}//end if
+            	return def.promise;
+            }//end if
 
             if(this.putBackend){
                 // put backend method is defined.  Call it to update the object on the backend
@@ -172,7 +262,7 @@ define([
                         this._putBackendSuccess(updatedObject,options,def);
                     }),
                     lang.hitch(this,function(errorObject){
-                        this._putBackendFail(errorObject,options,def);
+                        this._putBackendFail(object,errorObject,options,def);
                     })
                 );
             }else{
@@ -183,17 +273,44 @@ define([
             return def.promise;
         },
 
-        remove : function(id){
+        remove : function(id,def){
             // summary:
             //      Used to remove an item from the store by id
             // id: SimpleType
-            var def = new Deferred();
+           
+        	if(!def){
+        		def = new Deferred();	
+        	}//end if
+        	
             if(!this.collection){
-                // The JSONStore collection is not set on this instance of WorklightStore. No op.
-                // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
-                def.reject();
-                return def.promise;
-            }
+            	console.warn("No WL.JSONStore collection has been defined for this store");
+            	if(this.collectionInitClass && this.collectionInitMethod){
+            		console.debug("Attempting to init the collection via",this.collectionInitClass,this.collectionInitMethod);
+            		require([this.collectionInitClass],lang.hitch(this,function(LocalStorageInst){
+            			//The class should be a singleton!
+            			when(LocalStorageInst[this.collectionInitMethod](),
+            			lang.hitch(this,function(col){
+            				if(col){
+            					this.set("collection",col);
+            					console.debug("The collection has been initialized",col);
+                    			this.add(object, options,def);
+            				}else{
+            					console.error("The collection was undefined");
+            					def.reject(undefined);
+            				}//end if
+            			}),
+            			lang.hitch(this,function(error){
+            				console.error("There was an error calling",this.collectionInitClass,this.collectionInitMethod,error);
+            				def.reject(undefined);
+            			}));
+            		}));
+            	}else{
+            		 // The JSONStore collection is not set on this instance of WorklightStore and neither is collectionInitMethod. Returning empty array.
+                    // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
+                    def.reject(undefined);//TODO: format of error object from JSONStore;
+            	}//end if
+            	return def.promise;
+            }//end if
 
             if(this.removeBackend){
                 // Calling the backend remove method for item with store
@@ -253,22 +370,24 @@ define([
             this._addLocal(updatedObject, def,false);
         },
 
-        _addBackendFail : function(object,options,def){
-            //Failed to add the object to the backend store.  Lets store it locally and mark it for push.  That way
-            //later when we come back online, we will be able to push it. See this._onlineEventHandler
-            this._addLocal(object, def, true);//true that we want to mark the item as requiring push
+        _addBackendFail : function(object,errorObject,options,def){
+        	//Failed to add the object to the backend store.  Lets store it locally and mark it for push.  That way
+           //later when we come back online, we will be able to push it. See this._onlineEventHandler
+           this._addLocal(object, def, true);//true that we want to mark the item as requiring push
         },
 
         _putBackendSuccess : function(updatedObject,options,def){
-            //now we try adding the item to the local collection
+        	
+        	//now we try adding the item to the local collection
             //We put the updated object into the collection because the backend add method could have modified it.
             // e.g. with a server side id
             //since the item was added to backend first, we do not mark as push needed. i.e. false as last param
             this._replaceLocal(updatedObject, def,false,true);
         },
 
-        _putBackendFail : function(object,options,def){
-            //Failed to replace the object on the backend store.  Lets store it locally and mark it for push.
+        _putBackendFail : function(object,errorObject,options,def){
+        	
+        	//Failed to replace the object on the backend store.  Lets store it locally and mark it for push.
             //That way later when we come back online, we will be able to push it. See this._onlineEventHandler
             this._replaceLocal(object, def, true,true);//true that we want to mark the item as requiring push
         },
@@ -314,12 +433,13 @@ define([
                         def.resolve(arrayResults[0].json);
                     }else{
                         // No object was found in the collection.  Reject the deferred.
-                        def.reject();
+                        def.reject(undefined);
                     }
                 }
             ).fail(
                 function(errorObject){
                     // Failed to find object in collection after failed attempt to get object from the backend.
+                	console.error("Failed to find object in collection after failed attempt to get object from the backend.");
                     def.reject(errorObject);
                 }
             );
@@ -551,6 +671,7 @@ define([
                 })
             );
         },
+        
 
         //setters and getters
         _setCollectionAttr : function(collection){
@@ -620,10 +741,12 @@ define([
         _onlineEventHandler : function(){
             // summary:
             //      This method is used to push locally modified data to the backend when the aplication comes online
+        	//TODO This function needs to be inspected for bugs.  I put this together quite late in the evening ;)
+        	
             var _this = this;
             if(this.collection){
                 this.collection.getPushRequired().then(
-                    function(items){
+                    lang.hitch(this,function(items){
                         if(items.length > 0){
                             var item, def;
                             item = items[0];
@@ -694,7 +817,7 @@ define([
                         }else{
                             //No more items to push.
                         }
-                    }
+                    })
                 ).fail( function(){
                     //Failed to determine items to push
                 });
