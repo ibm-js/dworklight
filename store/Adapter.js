@@ -60,7 +60,8 @@ define([
             //      Optional. {start : Number, count : Number, sort : [{attribute : String, descending: boolean}]}
 
             var def = new Deferred();
-            if(query.noOp){
+           
+            if(query && query.noOp){//hack for dojox/app automatically calling query on model startup.  You may not want that to happen.
                 return def.resolve([]);
             }//end if
 

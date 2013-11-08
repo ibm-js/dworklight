@@ -133,6 +133,10 @@ define([
         		def = new Deferred();	
         	}//end if
         	
+        	 if(query && query.noOp){//hack for dojox/app automatically calling query on model startup.  You may not want that to happen.
+                 return def.resolve([]);
+             }//end if
+        	
             if(!this.collection){
             	console.warn("No WL.JSONStore collection has been defined for this store");
             	if(this.collectionInitClass && this.collectionInitMethod){
