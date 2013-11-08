@@ -64,19 +64,46 @@ define([
             lang.mixin(this,args);
         },
 
-        get : function(id){
+        get : function(id,def){
             // summary:
             //      Gets the entity with the given id.
             // description:
             //      This method first calls the backend method (if set) to get the object. If not, then local collection
             //      is always used.
-            var def = new Deferred();
+           
+        	if(!def){
+        		def = new Deferred();	
+        	}//end if
+        	
             if(!this.collection){
-                // The JSONStore collection is not set on this instance of WorklightStore.  Returning null.
-                // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
-                def.resolve(null);
-                return def.promise;
-            }
+            	console.warn("No WL.JSONStore collection has been defined for this store");
+            	if(this.collectionInitClass && this.collectionInitMethod){
+            		console.debug("Attempting to init the collection via",this.collectionInitClass,this.collectionInitMethod);
+            		require([this.collectionInitClass],lang.hitch(this,function(LocalStorageInst){
+            			//The class should be a singleton!
+            			when(LocalStorageInst[this.collectionInitMethod](),
+            			lang.hitch(this,function(col){
+            				if(col){
+            					this.set("collection",col);
+            					console.debug("The collection has been initialized",col);
+                    			this.get(id,def);
+            				}else{
+            					console.error("The collection was undefined");
+            					def.reject();
+            				}//end if
+            			}),
+            			lang.hitch(this,function(error){
+            				console.error("There was an error calling",this.collectionInitClass,this.collectionInitMethod,error);
+            				def.reject();
+            			}));
+            		}));
+            	}else{
+            		 // The JSONStore collection is not set on this instance of WorklightStore and neither is collectionInitMethod. Returning empty array.
+                    // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
+                    def.reject();//TODO: format of error object from JSONStore;
+            	}//end if
+            	return def.promise;
+            }//end if
 
             if(this.getBackend){
                 // Call getBackend method to get the object from the backend by id
@@ -120,18 +147,18 @@ define([
                     			this.query(query, options,def);
             				}else{
             					console.error("The collection was undefined");
-            					def.reject(undefined);
+            					def.reject();
             				}//end if
             			}),
             			lang.hitch(this,function(error){
             				console.error("There was an error calling",this.collectionInitClass,this.collectionInitMethod,error);
-            				def.reject(undefined);
+            				def.reject();
             			}));
             		}));
             	}else{
             		 // The JSONStore collection is not set on this instance of WorklightStore and neither is collectionInitMethod. Returning empty array.
                     // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
-                    def.reject(undefined);//TODO: format of error object from JSONStore;
+                    def.reject();//TODO: format of error object from JSONStore;
             	}//end if
             	return def.promise;
             }//end if
@@ -178,18 +205,18 @@ define([
                     			this.add(object, options,def);
             				}else{
             					console.error("The collection was undefined");
-            					def.reject(undefined);
+            					def.reject();
             				}//end if
             			}),
             			lang.hitch(this,function(error){
             				console.error("There was an error calling",this.collectionInitClass,this.collectionInitMethod,error);
-            				def.reject(undefined);
+            				def.reject();
             			}));
             		}));
             	}else{
             		 // The JSONStore collection is not set on this instance of WorklightStore and neither is collectionInitMethod. Returning empty array.
                     // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
-                    def.reject(undefined);//TODO: format of error object from JSONStore;
+                    def.reject();//TODO: format of error object from JSONStore;
             	}//end if
             	return def.promise;
             }//end if
@@ -239,18 +266,18 @@ define([
                     			this.put(object, options,def);
             				}else{
             					console.error("The collection was undefined");
-            					def.reject(undefined);
+            					def.reject();
             				}//end if
             			}),
             			lang.hitch(this,function(error){
             				console.error("There was an error calling",this.collectionInitClass,this.collectionInitMethod,error);
-            				def.reject(undefined);
+            				def.reject();
             			}));
             		}));
             	}else{
             		 // The JSONStore collection is not set on this instance of WorklightStore and neither is collectionInitMethod. Returning empty array.
                     // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
-                    def.reject(undefined);//TODO: format of error object from JSONStore;
+                    def.reject();//TODO: format of error object from JSONStore;
             	}//end if
             	return def.promise;
             }//end if
@@ -296,18 +323,18 @@ define([
                     			this.add(object, options,def);
             				}else{
             					console.error("The collection was undefined");
-            					def.reject(undefined);
+            					def.reject();
             				}//end if
             			}),
             			lang.hitch(this,function(error){
             				console.error("There was an error calling",this.collectionInitClass,this.collectionInitMethod,error);
-            				def.reject(undefined);
+            				def.reject();
             			}));
             		}));
             	}else{
             		 // The JSONStore collection is not set on this instance of WorklightStore and neither is collectionInitMethod. Returning empty array.
                     // Please set the collection via this.set('collection',WL.JSONStore.get(collectioName))
-                    def.reject(undefined);//TODO: format of error object from JSONStore;
+                    def.reject();//TODO: format of error object from JSONStore;
             	}//end if
             	return def.promise;
             }//end if
@@ -433,7 +460,7 @@ define([
                         def.resolve(arrayResults[0].json);
                     }else{
                         // No object was found in the collection.  Reject the deferred.
-                        def.reject(undefined);
+                        def.resolve(undefined);
                     }
                 }
             ).fail(
